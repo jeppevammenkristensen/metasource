@@ -1,0 +1,15 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003APropertyInfo_002Ecs_002Fl_003AC_0021_003FUsers_003Fjayki_003FAppData_003FRoaming_003FJetBrains_003FRider2024_002E2_003Fresharper_002Dhost_003FSourcesCache_003F408236be4b0703755f3ed96daaae245919a792d65ce5eaa672d9fa945b1f_003FPropertyInfo_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003ASelect_002ESpeedOpt_002Ecs_002Fl_003AC_0021_003FUsers_003Fjayki_003FAppData_003FLocal_003FSymbols_003Fsrc_003Fdotnet_003Fruntime_003F2aade6beb02ea367fd97c4070a4198802fe61c03_003Fsrc_003Flibraries_003FSystem_002ELinq_003Fsrc_003FSystem_003FLinq_003FSelect_002ESpeedOpt_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/CreateUnitTestDialog/TestProjectMapping/=4680BBF8_002D5BB7_002D46A2_002D98DB_002D88592975FF4C/@EntryIndexedValue">CF822456-263C-4DB4-9228-FBBE49C4FF4B</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/CreateUnitTestDialog/TestTemplateMapping/=xUnit/@EntryIndexedValue">33ff99d8-b1ad-4ed5-a4fd-376b97c2c841</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=c1d1b81e_002D1989_002D4e6f_002Da59f_002Dd9a0133f49f7/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="All tests from Solution" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;Solution /&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=ed5d2045_002Dc53b_002D43a1_002D8611_002D05245cd0525e/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="MapsProperty" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;xUnit::CF822456-263C-4DB4-9228-FBBE49C4FF4B::net8.0::MetaSource.Library.Tests.ReflectionGenericInstancePropertyTest.MapsReadProperty_ValidValues_AndCanSet&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::CF822456-263C-4DB4-9228-FBBE49C4FF4B::net8.0::MetaSource.Library.Tests.GenericInstanceTest.TestGenericInstanceProperty&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::CF822456-263C-4DB4-9228-FBBE49C4FF4B::net8.0::MetaSource.Library.Tests.ReflectionBasedInstancePropertyProviderTest.ReflectionBasedInstancePropertyProvider_GetProperty_ShouldReturnPropert&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
