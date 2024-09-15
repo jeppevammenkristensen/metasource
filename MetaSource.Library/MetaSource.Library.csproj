@@ -5,7 +5,7 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <VersionPrefix>0.0.1</VersionPrefix>
-        <VersionSuffix>alpha-05</VersionSuffix>
+        <VersionSuffix>alpha-07</VersionSuffix>
         <Description>A library to expose known metadata as data</Description>
         <Copyright>Jeppe Roi Kristensen</Copyright>
     </PropertyGroup>

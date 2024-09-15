@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
@@ -7,6 +8,8 @@ using Microsoft.CodeAnalysis.Text;
 
 
 namespace MetaSource;
+
+using PropertyClassType = (string propertyClassName, string type, string propertyName);
 
 /// <summary>
 /// A sample source generator that creates a custom report based on class properties. The target class should be annotated with the 'Generators.ReportAttribute' attribute.
@@ -88,6 +91,8 @@ namespace {Namespace}
         // Go through all filtered class declarations.
         foreach (var classDeclarationSyntax in classDeclarations)
         {
+            HashSet<PropertyClassType> properties = new ();
+            
             // We need to get semantic model of the class to retrieve metadata.
             var semanticModel = compilation.GetSemanticModel(classDeclarationSyntax.SyntaxTree);
 
@@ -118,7 +123,10 @@ namespace {Namespace}
                 // get display string that does not need a namespace from the type of the property
                 var propertyType = accessibleProperty.Type.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat);
 
+                
                 var propertyClassName = $"{className}_{accessibleProperty.Name}_InstanceProperty";
+                
+                properties.Add((propertyClassName, propertyType, accessibleProperty.Name));
                 
                 builder.AppendLine(
                     $"public class {propertyClassName} : GenericInstancePropertyBase<{className}, {propertyType}>");
@@ -184,7 +192,35 @@ namespace {Namespace}
                 context.AddSource($"{propertyClassName}.g.cs", SourceText.From(builder.ToString(), Encoding.UTF8));
             }
 
-            
+            GenerateExtensions(context, properties, namespaceName, className);
         }
+    }
+
+    private void GenerateExtensions(SourceProductionContext context,
+        HashSet<PropertyClassType> properties, string @namespace, string className)
+    {
+        var allBuilder = new StringBuilder();
+        allBuilder.AppendLine("public static System.Collections.Generic.IEnumerable<MetaSource.Library.IInstanceProperty> GetAll()");
+        allBuilder.AppendLine("{");
+        
+        var builder = new StringBuilder();
+        builder.AppendLine($"namespace {@namespace};");
+        builder.AppendLine();
+        builder.AppendLine($"public static class {className}_InstanceProperties");
+        builder.AppendLine("{");
+
+        foreach (var property in properties)
+        {
+            builder.AppendLine(
+                $"public static readonly {property.propertyClassName} {property.propertyName} = new();");
+            allBuilder.AppendLine($"yield return {property.propertyName};");
+        }
+
+        allBuilder.AppendLine("}");
+        
+        builder.AppendLine(allBuilder.ToString());
+        
+        builder.AppendLine("}");
+        context.AddSource($"{className}_InstanceProperties.g.cs", SourceText.From(builder.ToString(), Encoding.UTF8));
     }
 }

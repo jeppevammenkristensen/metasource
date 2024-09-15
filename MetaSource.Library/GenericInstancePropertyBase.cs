@@ -30,21 +30,29 @@ public abstract class GenericInstancePropertyBase<TSource, TValue> : ITypedInsta
         {
             return GetValue(typedSource);
         }
+        else
+        {
+            throw new InvalidOperationException($"Source was not of type {typeof(TSource)} but was {source.GetType()}");    
+        }
         
-        throw new InvalidOperationException($"Source was not of type {typeof(TSource)} but was {source.GetType()}");
+        
     }
 
     public abstract void SetValue(TSource source, TValue value);
 
     void IInstanceProperty.SetValue(object source, object? value)
-    {
+    {   
         if (source is TSource typedSource && value is TValue typedValue)
         {
             SetValue(typedSource, typedValue);
         }
+
+        else
+        {
+            // throw good exception to user
+            throw new InvalidOperationException($"Source was not of type {typeof(TSource)} and value {typeof(TValue)} but was {source.GetType()} and {value?.GetType()}");    
+        }
         
-        // throw good exception to user
-        throw new InvalidOperationException($"Source was not of type {typeof(TSource)} and value {typeof(TValue)} but was {source.GetType()} and {value?.GetType()}");
     }
 
     public abstract bool CanRead { get; }
