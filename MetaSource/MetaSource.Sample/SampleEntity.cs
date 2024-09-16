@@ -5,7 +5,7 @@ using MetaSource.Library.SourceGenerator;
 namespace SuperTest;
 
 [MetaData]
-public class Someclass
+public partial class Someclass
 {
     public string Name { get; set; }
     

@@ -12,12 +12,15 @@ public class ReflectionGenericInstanceProperty : IInstanceProperty
         Name = propertyInfo.Name;
         SourceType = propertyInfo.DeclaringType ??
                      throw new InvalidOperationException("The passed in property must belong to a type");
+        Key = $"{SourceType.FullName}.{Name}"; 
         ValueType = propertyInfo.PropertyType;
         CanRead = propertyInfo.CanRead;
         CanWrite = propertyInfo.CanWrite;
     }
 
     public string Name { get; }
+    
+    public string Key { get; }
     public Type SourceType { get; }
     public Type ValueType { get; }
     

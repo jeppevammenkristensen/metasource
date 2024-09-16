@@ -5,16 +5,21 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <VersionPrefix>0.0.1</VersionPrefix>
-        <VersionSuffix>alpha-07</VersionSuffix>
+        <PackageTags>C#;Source Generator</PackageTags>
         <Description>A library to expose known metadata as data</Description>
         <Copyright>Jeppe Roi Kristensen</Copyright>
+        <PackageReadmeFile>Readme.md</PackageReadmeFile>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
     </PropertyGroup>
 
     <ItemGroup>        
-        <ProjectReference Include="..\MetaSource\MetaSource\MetaSource.csproj"                           ReferenceOutputAssembly="false" />
+        <ProjectReference Include="..\MetaSource\MetaSource\MetaSource.csproj"   ReferenceOutputAssembly="false" />
     </ItemGroup>
     <ItemGroup Label="Package">
         <None Include="..\MetaSource\MetaSource\bin\$(Configuration)\netstandard2.0\MetaSource.dll" PackagePath="analyzers\dotnet\cs" Pack="true" />
+        <None Include="docs\Readme.md" Pack="true" PackagePath="/">
+         
+        </None>
     </ItemGroup>
 
 </Project>

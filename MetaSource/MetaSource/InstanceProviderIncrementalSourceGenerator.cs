@@ -3,6 +3,7 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
 
@@ -65,7 +66,7 @@ namespace {Namespace}
         foreach (AttributeListSyntax attributeListSyntax in classDeclarationSyntax.AttributeLists)
         foreach (AttributeSyntax attributeSyntax in attributeListSyntax.Attributes)
         {
-            if (context.SemanticModel.GetSymbolInfo(attributeSyntax).Symbol is not IMethodSymbol attributeSymbol)
+            if (ModelExtensions.GetSymbolInfo(context.SemanticModel, attributeSyntax).Symbol is not IMethodSymbol attributeSymbol)
                 continue; // if we can't get the symbol, ignore it
 
             string attributeName = attributeSymbol.ContainingType.ToDisplayString();
@@ -97,8 +98,10 @@ namespace {Namespace}
             var semanticModel = compilation.GetSemanticModel(classDeclarationSyntax.SyntaxTree);
 
             // Symbols allow us to get the compile-time information.
-            if (semanticModel.GetDeclaredSymbol(classDeclarationSyntax) is not INamedTypeSymbol classSymbol)
+            if (ModelExtensions.GetDeclaredSymbol(semanticModel, classDeclarationSyntax) is not INamedTypeSymbol classSymbol)
                 continue;
+            // declare a bool to signal if a class is partial from the classSymbol
+            bool isPartial = classDeclarationSyntax.Modifiers.Any(SyntaxKind.PartialKeyword);
 
             var namespaceName = classSymbol.ContainingNamespace.ToDisplayString();
 
@@ -132,6 +135,8 @@ namespace {Namespace}
                     $"public class {propertyClassName} : GenericInstancePropertyBase<{className}, {propertyType}>");
                 builder.AppendLine("{");
                 builder.AppendLine($"\tpublic override string Name => \"{accessibleProperty.Name}\";");
+                builder.AppendLine($"\tpublic override string Key => \"{namespaceName}.{className}.{accessibleProperty.Name}\";");
+                
                 builder.AppendLine();
 
                 bool canRead = false;
@@ -192,16 +197,21 @@ namespace {Namespace}
                 context.AddSource($"{propertyClassName}.g.cs", SourceText.From(builder.ToString(), Encoding.UTF8));
             }
 
-            GenerateExtensions(context, properties, namespaceName, className);
+            GenerateExtensions(context, properties, namespaceName, className, isPartial);
         }
     }
 
     private void GenerateExtensions(SourceProductionContext context,
-        HashSet<PropertyClassType> properties, string @namespace, string className)
+        HashSet<PropertyClassType> properties, string @namespace, string className, bool isPartial)
     {
         var allBuilder = new StringBuilder();
         allBuilder.AppendLine("public static System.Collections.Generic.IEnumerable<MetaSource.Library.IInstanceProperty> GetAll()");
         allBuilder.AppendLine("{");
+
+        var partialBuilder = new StringBuilder();
+        partialBuilder.AppendLine($"public partial class {className}");
+        partialBuilder.AppendLine("{");
+        
         
         var builder = new StringBuilder();
         builder.AppendLine($"namespace {@namespace};");
@@ -214,13 +224,26 @@ namespace {Namespace}
             builder.AppendLine(
                 $"public static readonly {property.propertyClassName} {property.propertyName} = new();");
             allBuilder.AppendLine($"yield return {property.propertyName};");
+            partialBuilder.AppendLine($"public static {property.propertyClassName} {property.propertyName}_InstanceProperty => {className}_InstanceProperties.{property.propertyName};");
+            builder.AppendLine(
+                $"public static {property.propertyClassName} {property.propertyName}_InstanceProperty(this {className} source)");
+            builder.AppendLine("{");
+            builder.AppendLine($"\treturn {property.propertyName};");
+            builder.AppendLine("}");
         }
 
         allBuilder.AppendLine("}");
+        partialBuilder.AppendLine("}");
         
         builder.AppendLine(allBuilder.ToString());
         
         builder.AppendLine("}");
+
+        if (isPartial)
+        {
+            builder.AppendLine(partialBuilder.ToString());
+        }
+        
         context.AddSource($"{className}_InstanceProperties.g.cs", SourceText.From(builder.ToString(), Encoding.UTF8));
     }
 }

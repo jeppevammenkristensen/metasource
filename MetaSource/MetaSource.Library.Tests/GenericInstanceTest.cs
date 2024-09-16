@@ -25,6 +25,7 @@ public class InstanceTest
 public class InstanceTestProperty : GenericInstancePropertyBase<InstanceTest, int>
 {
     public override string Name => nameof(InstanceTest.SomeProperty);
+    public override string Key => "SomeKey";
     public override int GetValue(InstanceTest source)
     {
         return source.SomeProperty;

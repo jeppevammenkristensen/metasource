@@ -19,6 +19,8 @@ public abstract class GenericInstancePropertyBase<TSource, TValue> : ITypedInsta
 {
     public abstract string Name { get; }
     public Type SourceType => typeof(TSource);
+    
+    public abstract string Key { get; }
 
     public Type ValueType => typeof(TValue);
 

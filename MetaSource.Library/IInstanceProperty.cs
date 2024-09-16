@@ -11,3 +11,4 @@ public interface IInstanceProperty : INamedMetaItem
     public bool CanRead { get; }
     public bool CanWrite { get; }
 }
+
