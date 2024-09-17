@@ -1,5 +1,7 @@
 ﻿namespace MetaSource.Library;
 
+
+
 public interface IInstanceProperty : INamedMetaItem
 {
     public Type SourceType { get;  }

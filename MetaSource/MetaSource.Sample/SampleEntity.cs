@@ -1,5 +1,7 @@
 // This code will not compile until you build the project with the Source Generators
 
+using System.IO.Compression;
+using MetaSource.Library;
 using MetaSource.Library.SourceGenerator;
 
 namespace SuperTest;
@@ -12,12 +14,16 @@ public partial class Someclass
     public int Age { get; }
 }
 
-public class Processor()
+public class TransferSample()
 {
-    public void Method()
+    public void Transfer()
     {
-        var someclassAgeInstanceProperty = new Someclass_Age_InstanceProperty();
-        var test = new Someclass();
-        someclassAgeInstanceProperty.GetValue(test);
+        var source = new Someclass();
+        var destination = new Someclass();
+        
+        foreach (var instanceProperty in source.GetInstanceProperties())
+        {
+            instanceProperty.SafeTransfer(source, destination);
+        }
     }
 }

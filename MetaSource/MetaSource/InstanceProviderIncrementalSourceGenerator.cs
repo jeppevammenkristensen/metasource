@@ -208,15 +208,18 @@ namespace {Namespace}
         allBuilder.AppendLine("public static System.Collections.Generic.IEnumerable<MetaSource.Library.IInstanceProperty> GetAll()");
         allBuilder.AppendLine("{");
 
+        var staticClass = $"{className}_InstanceProperties";
+
         var partialBuilder = new StringBuilder();
-        partialBuilder.AppendLine($"public partial class {className}");
+        partialBuilder.AppendLine($"public partial class {className} : MetaSource.Library.IInstancePropertyProvider");
         partialBuilder.AppendLine("{");
+        partialBuilder.AppendLine($"\tpublic System.Collections.Generic.IEnumerable<MetaSource.Library.IInstanceProperty> GetInstanceProperties() => {staticClass}.GetAll();");
         
         
         var builder = new StringBuilder();
         builder.AppendLine($"namespace {@namespace};");
         builder.AppendLine();
-        builder.AppendLine($"public static class {className}_InstanceProperties");
+        builder.AppendLine($"public static class {staticClass}");
         builder.AppendLine("{");
 
         foreach (var property in properties)

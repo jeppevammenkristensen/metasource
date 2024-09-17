@@ -1,9 +1,9 @@
 ﻿namespace MetaSource.Library;
 
 public interface ITypedInstanceProperty<in TSource,TValue> : IInstanceProperty
-{
-    public TValue GetValue(TSource source);
-    public void SetValue(TSource source, TValue value);
+{ 
+    TValue GetValue(TSource source);
+    void SetValue(TSource source, TValue value);
 }
 
 public class Test
@@ -11,7 +11,7 @@ public class Test
     public int Get { get; }
     
     
-}
+}   
 
 
 

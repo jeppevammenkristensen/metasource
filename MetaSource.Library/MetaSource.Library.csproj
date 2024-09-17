@@ -4,10 +4,12 @@
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <VersionPrefix>0.0.1</VersionPrefix>
+        <VersionPrefix>0.0.2</VersionPrefix>
         <PackageTags>C#;Source Generator</PackageTags>
         <Description>A library to expose known metadata as data</Description>
         <Copyright>Jeppe Roi Kristensen</Copyright>
+        <PackageProjectUrl>https://github.com/jeppevammenkristensen/metasource</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/jeppevammenkristensen/metasource</RepositoryUrl>
         <PackageReadmeFile>Readme.md</PackageReadmeFile>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
     </PropertyGroup>
