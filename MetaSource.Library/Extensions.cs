@@ -30,10 +30,8 @@ public static class Extensions
     /// <remarks>The source and destination must be of the same type</remarks>
     public static bool SafeTransfer(this IInstanceProperty property, object source, object destination)
     {
-        if (property is not {CanRead: true, CanWrite: true})
+        if (!property.IsReadAndWrite())
             return false;
-        
-        
             
         var value = property.GetValue(source);
         property.SetValue(destination,value);
@@ -55,7 +53,7 @@ public static class Extensions
     {
         value = default!;
 
-        if (property is {CanRead: true, CanWrite: true})
+        if (property.IsReadAndWrite())
         {
             var sourceValue = property.GetValue(source);
             property.SetValue(destination, sourceValue);
@@ -66,6 +64,13 @@ public static class Extensions
         return false;
     }
 
+    public static bool IsReadAndWrite(this IInstanceProperty source)
+    {
+        return source is {CanRead: true, CanWrite: true};
+    }
+
+    public static bool IsReadOnly(this IInstanceProperty source) => source is {CanRead: true, CanWrite: false};
+    public static bool IsWriteOnly(this IInstanceProperty source) => source is {CanRead: false, CanWrite: true};
     
     // public static T CloneSimpleProperties<T>(this T source) where T : IInstancePropertyProvider, new()
     // {
@@ -77,9 +82,12 @@ public static class Extensions
     //             
     //         }
     //         var value = property.GetValue(source);
-    //         
     //     }
-    // }
     //
-    
+    //     return newItem;
+    //
+    //
+    // }
+
+
 }

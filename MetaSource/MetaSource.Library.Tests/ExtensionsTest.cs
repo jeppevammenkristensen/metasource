@@ -66,10 +66,8 @@ public class ExtensionsTest
         testClass.Number = 50;
         var destination  = new TestClass();
         var instanceProperty = testClass.GetInstanceProperties().First();
-        instanceProperty.SafeTransfer(testClass, destination);
+        instanceProperty.SafeTransfer(testClass, destination).Should().BeTrue();
         
-        
-
         destination.Number.Should().Be(50);
     }
 }

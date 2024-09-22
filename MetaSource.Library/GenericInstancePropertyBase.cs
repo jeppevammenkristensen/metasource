@@ -1,20 +1,5 @@
 ﻿namespace MetaSource.Library;
 
-public interface ITypedInstanceProperty<in TSource,TValue> : IInstanceProperty
-{ 
-    TValue GetValue(TSource source);
-    void SetValue(TSource source, TValue value);
-}
-
-public class Test
-{
-    public int Get { get; }
-    
-    
-}   
-
-
-
 public abstract class GenericInstancePropertyBase<TSource, TValue> : ITypedInstanceProperty<TSource,TValue>
 {
     public abstract string Name { get; }
